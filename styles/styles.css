@@ -1,0 +1,99 @@
+@font-face {
+  font-family: "super_mario_256regular";
+  src: url("../fonts/logo/supermario256-webfont.woff2") format("woff2"),
+    url("../fonts/logo/supermario256-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "super_mario_bros._3regular";
+  src: url("../fonts/main/super-mario-bros--3-webfont.woff2") format("woff2"),
+    url("../fonts/main/super-mario-bros--3-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "super_mario_bros._3regular";
+  overflow: hidden;
+}
+
+#game-intro-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#game-intro {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  background-image: url("../images/start-screen-background.jpg");
+  background-position: center top;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  padding-top: 3vw;
+}
+
+#game-logo {
+  text-align: center;
+  font-family: "super_mario_256regular";
+  font-size: 5vw;
+  color: #64b0ff;
+  -webkit-text-stroke: 2px black;
+  text-shadow: 50px 40px 2px #1412a7;
+  display: flex;
+  flex-direction: column;
+}
+
+#game-logo h1 {
+  margin: 0;
+}
+
+#game-logo .game-logo-number {
+  text-shadow: none;
+  font-size: 15vw;
+}
+
+#game-intro-start-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#game-intro-start-controls button {
+  color: white; /* Text color */
+  font-size: 16px; /* Adjust the font size as needed */
+  /* Create a pixelated effect using text-shadow */
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000, /* Corners */ 0px -1px 0 #000, 0px 1px 0 #000,
+    -1px 0px 0 #000, 1px 0px 0 #000, /* Cardinal directions */ 1px 2px 0 #000,
+    -1px 2px 0 #000, 2px -1px 0 #000, 2px 1px 0 #000,
+    /* Diagonal outer */ 2px 0px 0 #000, 0px 2px 0 #000, -2px 0px 0 #000,
+    0px -2px 0 #000; /* Straight outer */
+}
+
+#game-container {
+  display: none;
+}
+
+#game-end {
+  display: none;
+}
+
+button,
+input[type="submit"],
+input[type="reset"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
