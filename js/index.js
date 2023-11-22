@@ -19,6 +19,8 @@ window.onload = function () {
     if (game) {
       game.canvas.width = window.innerWidth;
       game.canvas.height = window.innerHeight;
+      game.scaledCanvas.width = game.canvas.width;
+      game.scaledCanvas.height = game.canvas.height;
     }
   });
 
