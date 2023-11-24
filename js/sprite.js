@@ -1,14 +1,16 @@
 class Sprite {
-  constructor({ canvas, canvasContext, position, imgSrc, frameRate = 1, frameBuffer = 3, scale = 1 }) {
+  constructor({ canvas, canvasContext, position, imgSrc, frameRate = 1, frameBuffer = 8, scale = 1 }) {
     this.canvas = canvas;
     this.canvasContext = canvasContext;
     this.scale = scale;
     this.position = position;
+    this.loaded = false;
     this.image = new Image();
     this.image.src = imgSrc;
     this.image.onload = () => {
       this.width = (this.image.width / this.frameRate) * this.scale;
       this.height = (this.image.height) * this.scale;
+      this.loaded = true;
     };
     this.frameRate = frameRate;
     this.currentFrame = 0;

@@ -29,10 +29,12 @@ window.addEventListener('keydown', function (event) {
     switch (event.key) {
         case 'd':
             game.player.keys.d.pressed = true;
+            game.player.direction = 'right';
             // game.player.velocity.x = 1;
             break;
         case 'a':
             game.player.keys.a.pressed = true;
+            game.player.direction = 'left';
             game.player.velocity.x = -1;
             break;
         case 'w':
@@ -45,10 +47,13 @@ window.addEventListener('keyup', function (event) {
     switch (event.key) {
         case 'd':
             game.player.keys.d.pressed = false;
+            
             // game.player.velocity.x = 1;
             break;
         case 'a':
             game.player.keys.a.pressed = false;
+            
+          
             // game.player.velocity.x = -1;
             break;
        

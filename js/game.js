@@ -65,24 +65,58 @@ class Game {
                 x: x * 16,
                 y: y * 16,
               },
+              height: 16
             })
           );
         }
       });
     });
 
-    this.player = new Player(
-      this.canvas,
-      this.canvasContext,
-      {
+    this.player = new Player({
+      canvas: this.canvas,
+      canvasContext: this.canvasContext,
+      position: {
         x: 50,
         y: 100,
       },
-      this.collisionBlocks,
-      '../images/sprites/mario-standing.png',
-      1,
-      1
-    );
+      collisionBlocks: this.collisionBlocks,
+      platformCollisionsBlocks: this.platformCollisionsBlocks,
+      imgSrc: "../images/sprites/mario-standing-right.png",
+      frameRate: 1,
+      animations: {
+        idle: {
+          imgSrc: "../images/sprites/mario-standing-right.png",
+          frameRate: 1,
+          frameBuffer: 8,
+        },
+        idleLeft: {
+          imgSrc: "../images/sprites/mario-standing-left.png",
+          frameRate: 1,
+          frameBuffer: 8,
+        },
+        run: {
+          imgSrc: "../images/sprites/mario-running.png",
+          frameRate: 2,
+          frameBuffer: 8,
+        },
+        runLeft: {
+          imgSrc: "../images/sprites/mario-running-left.png",
+          frameRate: 2,
+          frameBuffer: 8,
+        },
+        jump: {
+          imgSrc: "../images/sprites/mario-jumping-right.png",
+          frameRate: 1,
+          frameBuffer: 8,
+        },
+        jumpLeft: {
+          imgSrc: "../images/sprites/mario-jumping-left.png",
+          frameRate: 1,
+          frameBuffer: 8,
+        },
+      },
+      scale: 1
+  });
 
     this.player.draw();
     this.gameLoop();
@@ -94,9 +128,21 @@ class Game {
 
     this.player.velocity.x = 0;
     if (this.player.keys.d.pressed) {
+      this.player.switchSprite("run");
       this.player.velocity.x = 5;
     } else if (this.player.keys.a.pressed) {
+      this.player.switchSprite("runLeft");
       this.player.velocity.x = -5;
+    } else if (this.player.velocity.x === 0) {
+      this.player.switchSprite(this.player.direction === 'right' ? 'idle' : 'idleLeft');
+    }
+
+    if (this.player.velocity.y > 0.5 || this.player.velocity.y < 0) {
+  
+        this.player.switchSprite(this.player.direction === 'right' ? 'jump' : 'jumpLeft');
+  
+      
+      
     }
 
     window.requestAnimationFrame(() => this.gameLoop());
