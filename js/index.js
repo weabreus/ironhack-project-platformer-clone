@@ -11,7 +11,7 @@ window.onload = function () {
   function startGame() {
     console.log("start game");
 
-    game = new Game();
+    game = new Game(floorCollisions2D, platformCollisions2D);
     game.start();
   }
 
@@ -36,7 +36,7 @@ window.addEventListener('keydown', function (event) {
             game.player.velocity.x = -1;
             break;
         case 'w':
-            game.player.velocity.y = -15;
+            game.player.velocity.y = -18 / 2;
             break;
     }
 });
