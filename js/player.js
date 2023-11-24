@@ -1,5 +1,7 @@
 class Player extends Sprite {
   constructor({
+    background,
+    camera,
     canvas,
     canvasContext,
     position,
@@ -11,6 +13,8 @@ class Player extends Sprite {
     scale = 1,
   }) {
     super({ imgSrc, frameRate, scale });
+    this.background = background;
+    this.camera = camera;
     this.canvas = canvas;
     this.canvasContext = canvasContext;
     this.position = position;
@@ -23,6 +27,14 @@ class Player extends Sprite {
       },
       width: 16,
       height: 16,
+    };
+    this.camerabox = {
+      position: {
+        x: this.position.x,
+        y: this.position.y,
+      },
+      width: 200,
+      height: 80,
     };
     this.velocity = {
       x: 0,
@@ -65,7 +77,16 @@ class Player extends Sprite {
   move() {
     this.updateFrames();
     this.updateHitbox();
+    this.updateCamerabox();
 
+    // draw the camera box
+    // this.canvasContext.fillStyle = "rgba(0,0,255,0.6";
+    // this.canvasContext.fillRect(
+    //   this.camerabox.position.x,
+    //   this.camerabox.position.y,
+    //   this.camerabox.width,
+    //   this.camerabox.height
+    // );
     // this.canvasContext.fillStyle = "rgba(0, 0, 255, 0.2)";
     // this.canvasContext.fillRect(
     //   this.position.x,
@@ -91,12 +112,11 @@ class Player extends Sprite {
     this.applyGravity();
     this.updateHitbox();
     // I need to check multiple times for vertical collision based on velocity.y to avoid "Bullet thru paper" effect
-    let numberOfChecks = Math.ceil(this.velocity.y * 2);
+    let numberOfChecks = Math.abs(Math.ceil(this.velocity.y * 2));
 
     for (let i = 0; i < numberOfChecks; i++) {
-      if(this.checkForVerticalCollisions()) break;
+      if (this.checkForVerticalCollisions()) break;
     }
-    
   }
 
   updateHitbox() {
@@ -109,6 +129,34 @@ class Player extends Sprite {
       height: 16,
     };
   }
+
+  updateCamerabox() {
+    this.camerabox = {
+      position: {
+        x: this.position.x - window.innerWidth / 4,
+        y: this.position.y - this.camerabox.height,
+      },
+      width: window.innerWidth / 2,
+      height: 80,
+    };
+  }
+
+  shouldPanCameraToTheLeft() {
+    const cameraboxRightSide = this.camerabox.position.x + this.camerabox.width;
+    
+    if(cameraboxRightSide >= this.background.width - 10) return
+    if (cameraboxRightSide >= this.canvas.width / 2 + Math.abs(this.camera.position.x)) {
+      this.camera.position.x -= this.velocity.x;
+    }
+  }
+
+  shouldPanCameraToTheRight() {
+    if (this.camerabox.position.x <= 0) return;
+    if (this.camerabox.position.x <= Math.abs(this.camera.position.x)) {
+      this.camera.position.x -= this.velocity.x;
+    }
+  }
+
   checkForHorizontalCollisions() {
     for (let i = 0; i < this.collisionBlocks.length; i++) {
       const collisionBlock = this.collisionBlocks[i];
@@ -135,6 +183,12 @@ class Player extends Sprite {
           break;
         }
       }
+    }
+  }
+
+  checkForHorizontalCanvasCollision() {
+    if (this.hitbox.position.x + this.hitbox.width + this.velocity.x >= this.background.width - 10 || this.hitbox.position.x + this.velocity.x<= 0) {
+      this.velocity.x = 0
     }
   }
 
@@ -172,7 +226,7 @@ class Player extends Sprite {
     }
 
     // Detects collision for platforms
-    
+
     for (let i = 0; i < this.platformCollisionBlocks.length; i++) {
       const platformCollisionBlock = this.platformCollisionBlocks[i];
 
@@ -189,14 +243,11 @@ class Player extends Sprite {
           this.position.y = platformCollisionBlock.position.y - offset - 0.01;
           break;
         }
-
-       
       }
     }
   }
 
   switchSprite(key) {
-    
     if (this.image === this.animations[key].image || !this.loaded) return;
 
     this.currentFrame = 0;

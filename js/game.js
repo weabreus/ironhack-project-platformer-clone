@@ -27,6 +27,12 @@ class Game {
     this.collisionBlocks = [];
     this.platformCollisions = platformCollisions;
     this.platformCollisionsBlocks = [];
+    this.camera = {
+      position: {
+        x: 0,
+        y: 0,
+      },
+    };
   }
 
   start() {
@@ -65,7 +71,7 @@ class Game {
                 x: x * 16,
                 y: y * 16,
               },
-              height: 16
+              height: 16,
             })
           );
         }
@@ -73,6 +79,8 @@ class Game {
     });
 
     this.player = new Player({
+      background: this.background,
+      camera: this.camera,
       canvas: this.canvas,
       canvasContext: this.canvasContext,
       position: {
@@ -115,8 +123,8 @@ class Game {
           frameBuffer: 8,
         },
       },
-      scale: 1
-  });
+      scale: 1,
+    });
 
     this.player.draw();
     this.gameLoop();
@@ -130,19 +138,21 @@ class Game {
     if (this.player.keys.d.pressed) {
       this.player.switchSprite("run");
       this.player.velocity.x = 5;
+      this.player.shouldPanCameraToTheLeft();
     } else if (this.player.keys.a.pressed) {
       this.player.switchSprite("runLeft");
       this.player.velocity.x = -5;
+      this.player.shouldPanCameraToTheRight();
     } else if (this.player.velocity.x === 0) {
-      this.player.switchSprite(this.player.direction === 'right' ? 'idle' : 'idleLeft');
+      this.player.switchSprite(
+        this.player.direction === "right" ? "idle" : "idleLeft"
+      );
     }
 
     if (this.player.velocity.y > 0.5 || this.player.velocity.y < 0) {
-  
-        this.player.switchSprite(this.player.direction === 'right' ? 'jump' : 'jumpLeft');
-  
-      
-      
+      this.player.switchSprite(
+        this.player.direction === "right" ? "jump" : "jumpLeft"
+      );
     }
 
     window.requestAnimationFrame(() => this.gameLoop());
@@ -157,7 +167,7 @@ class Game {
     this.canvasContext.save();
     this.canvasContext.scale(2, 2);
     this.canvasContext.translate(
-      0,
+      this.camera.position.x,
       -this.background.image.height + this.scaledCanvas.height
     );
     this.background.update();
@@ -165,7 +175,8 @@ class Game {
     this.collisionBlocks.forEach((block) => block.update());
     // render platform collision blocks
     this.platformCollisionsBlocks.forEach((block) => block.update());
-
+    
+    this.player.checkForHorizontalCanvasCollision();
     // Update the player position in each frame
     this.player.move();
 
