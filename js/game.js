@@ -127,35 +127,42 @@ class Game {
     });
 
     this.player.draw();
-    this.gameLoop();
+    window.requestAnimationFrame((timestamp) => this.gameLoop(timestamp));
   }
 
-  gameLoop() {
+  gameLoop(timestamp) {
     if (this.isGameOver) return;
-    this.update();
 
-    this.player.velocity.x = 0;
-    if (this.player.keys.d.pressed) {
-      this.player.switchSprite("run");
-      this.player.velocity.x = 5;
-      this.player.shouldPanCameraToTheLeft();
-    } else if (this.player.keys.a.pressed) {
-      this.player.switchSprite("runLeft");
-      this.player.velocity.x = -5;
-      this.player.shouldPanCameraToTheRight();
-    } else if (this.player.velocity.x === 0) {
-      this.player.switchSprite(
-        this.player.direction === "right" ? "idle" : "idleLeft"
-      );
+    const deltaTime = timestamp - lastFrameTime;
+
+    if (deltaTime >= frameDelay) {
+      this.update();
+
+      this.player.velocity.x = 0;
+      if (this.player.keys.d.pressed) {
+        this.player.switchSprite("run");
+        this.player.velocity.x = 5;
+        this.player.shouldPanCameraToTheLeft();
+      } else if (this.player.keys.a.pressed) {
+        this.player.switchSprite("runLeft");
+        this.player.velocity.x = -5;
+        this.player.shouldPanCameraToTheRight();
+      } else if (this.player.velocity.x === 0) {
+        this.player.switchSprite(
+          this.player.direction === "right" ? "idle" : "idleLeft"
+        );
+      }
+
+      if (this.player.velocity.y > 0.5 || this.player.velocity.y < 0) {
+        this.player.switchSprite(
+          this.player.direction === "right" ? "jump" : "jumpLeft"
+        );
+      }
+
+      lastFrameTime = timestamp;
     }
 
-    if (this.player.velocity.y > 0.5 || this.player.velocity.y < 0) {
-      this.player.switchSprite(
-        this.player.direction === "right" ? "jump" : "jumpLeft"
-      );
-    }
-
-    window.requestAnimationFrame(() => this.gameLoop());
+    window.requestAnimationFrame((timestamp) => this.gameLoop(timestamp));
   }
 
   update() {
@@ -175,7 +182,7 @@ class Game {
     this.collisionBlocks.forEach((block) => block.update());
     // render platform collision blocks
     this.platformCollisionsBlocks.forEach((block) => block.update());
-    
+
     this.player.checkForHorizontalCanvasCollision();
     // Update the player position in each frame
     this.player.move();
