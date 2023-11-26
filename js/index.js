@@ -1,5 +1,8 @@
 // Global variables
 const gravity = 0.5;
+const targetFPS = 60;
+const frameDelay = 1000 / targetFPS;
+let lastFrameTime = 0;
 
 window.onload = function () {
   let startButton = document.getElementById("start-button");
