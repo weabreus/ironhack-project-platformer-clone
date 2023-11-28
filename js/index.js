@@ -23,7 +23,8 @@ window.onload = function () {
     game = new Game(
       floorCollisions2D,
       platformCollisions2D,
-      questionBoxesCollisions2D
+      questionBoxesCollisions2D,
+      endGameCollisions2D
     );
     game.start();
   }
@@ -81,7 +82,8 @@ window.onload = function () {
       game = new Game(
         floorCollisions2D,
         platformCollisions2D,
-        questionBoxesCollisions2D
+        questionBoxesCollisions2D,
+        endGameCollisions2D
       );
       game.restart();
     });

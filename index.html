@@ -21,10 +21,10 @@
         </div>
       </div>
       <div id="game-container">
-        <div id="score" class="mariofont">points: 0</div>
+        <div id="score" class="mariofont">time: 0 points: 0</div>
         <canvas></canvas>
         <div id="game-lost">
-          <div class="message-window mariofont">
+          <div id="game-lost-window" class="message-window mariofont">
             <p>mario</p>
             <p>game over!</p>
             <div id="game-lost-options">
@@ -56,7 +56,29 @@
         </div>
       </div>
 
-      <div id="game-end"></div>
+      <div id="game-end">
+        <div id="game-end-result" class="message-window mariofont">
+          <p>level cleared!</p>
+          <p id="results-time-element">final time: </p>
+          <p id="results-score-element">final score: </p>
+          <button class="mariofont">continue</button>
+        </div>
+        <div id="leaderboards" class="message-window mariofont">
+          <p>leaderboards</p>
+          <table id="leaderboards-table">
+            <thead>
+              <tr>
+                <th>date</th>
+                <th>time</th>
+                <th>score</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
     </main>
     <script type="text/javascript" src="./js/utils.js"></script>
     <script type="text/javascript" src="./js/data/collisions.js"></script>
@@ -66,6 +88,7 @@
     <script type="text/javascript" src="./js/classes/PlusMushroom.js"></script>
     <script type="text/javascript" src="./js/classes/BlockCoin.js"></script>
     <script type="text/javascript" src="./js/classes/QuestionBlock.js"></script>
+    <script type="text/javascript" src="./js/classes/EndGameCard.js"></script>
     <script
       type="text/javascript"
       src="./js/classes/CollisionBlock.js"

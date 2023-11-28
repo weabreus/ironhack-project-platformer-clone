@@ -1,14 +1,24 @@
 let collisionBlocks = [];
 let platformCollisionsBlocks = [];
 let questionBoxesCollisionsBlocks = [];
+let endGameCollisionsBlocks = [];
 let stageItems = [];
 
 class Game {
-  constructor(floorCollisions, platformCollisions, questionBoxesCollisions) {
+  constructor(
+    floorCollisions,
+    platformCollisions,
+    questionBoxesCollisions,
+    endGameCollisions
+  ) {
+    this.startTime = null;
+    this.elapsedTime = 0;
     this.animationFrameId = null;
     this.startScreen = document.getElementById("game-intro");
     this.gameScreen = document.getElementById("game-container");
     this.gameEndScreen = document.getElementById("game-end");
+    this.resultsTimeElement = document.getElementById("results-time-element");
+    this.resultsScoreElement = document.getElementById("results-score-element");
     this.lostScreen = document.getElementById("game-lost");
     this.canvas = document.querySelector("canvas");
     this.canvasContext = this.canvas.getContext("2d");
@@ -36,6 +46,7 @@ class Game {
     this.platformCollisions = platformCollisions;
 
     this.questionBoxesCollisions = questionBoxesCollisions;
+    this.endGameCollisions = endGameCollisions;
 
     this.camera = {
       position: {
@@ -46,6 +57,7 @@ class Game {
   }
 
   start() {
+    initializeLeaderboard();
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     this.scaledCanvas.width = this.canvas.width / 2;
@@ -113,8 +125,33 @@ class Game {
       });
     });
 
+    // add endgame collisions
+    this.endGameCollisions.forEach((row, y) => {
+      row.forEach((symbol, x) => {
+        if (symbol === 4753) {
+          questionBoxesCollisionsBlocks.push(
+            new EndGameCard({
+              canvas: this.canvas,
+              canvasContext: this.canvasContext,
+              position: {
+                x: x * 16 - 5,
+                y: y * 16 - 5,
+              },
+              imgSrc: "../images/sprites/end-game-cards.png",
+              frameRate: 3,
+              scale: 1,
+              player: this.player,
+            })
+          );
+        }
+      });
+    });
+    console.log(endGameCollisionsBlocks);
     this.player.draw();
-    this.animationFrameId = window.requestAnimationFrame((timestamp) => this.gameLoop(timestamp));
+    this.startTime = Date.now();
+    this.animationFrameId = window.requestAnimationFrame((timestamp) =>
+      this.gameLoop(timestamp)
+    );
   }
 
   restart() {
@@ -147,9 +184,12 @@ class Game {
         }
       });
     });
-    
+
     this.player.draw();
-    this.animationFrameId = window.requestAnimationFrame((timestamp) => this.gameLoop(timestamp));
+    this.startTime = Date.now();
+    this.animationFrameId = window.requestAnimationFrame((timestamp) =>
+      this.gameLoop(timestamp)
+    );
   }
   gameLoop(timestamp) {
     console.log("game looping");
@@ -189,6 +229,9 @@ class Game {
   }
 
   update() {
+    // Update timer
+    this.elapsedTime = Date.now() - this.startTime;
+    this.updateInformationUI();
     // Clear the canvas in each frame
     this.canvasContext.fillStyle = "white";
     this.canvasContext.fillRect(0, 0, this.canvas.width, this.canvas.height);
@@ -209,6 +252,9 @@ class Game {
     platformCollisionsBlocks.forEach((block) => block.update());
     // render questionBox collision block
     questionBoxesCollisionsBlocks.forEach((block) => block.update());
+    // render end game cards collision block
+    endGameCollisionsBlocks.forEach((block) => block.update());
+
     this.player.checkForHorizontalCanvasCollision();
     // Render stage items
     stageItems.forEach((item, index) => {
@@ -236,8 +282,18 @@ class Game {
 
   endGame() {
     this.isGameOver = true;
+    addToLeaderboard({date: formatDate(Date.now()), time: this.elapsedTime, score: this.score});
+    let leaderboard = getLeaderboard();
+    let sortedLeaderboard = sortLeaderboard(leaderboard);
+    let topScores = getTop10Scores(sortedLeaderboard);
+    // Here i need to add these scores to the HTML table
+    topScores.forEach((score) => addRowToLeaderboard(score.date, score.time, score.score));
+    this.resultsTimeElement.innerHTML = `final time: ${(
+      Math.floor(this.elapsedTime / 1000)
+    ).toLocaleString()} seconds`;
+    this.resultsScoreElement.innerHTML = `final score: ${this.score.toLocaleString()}`;
     this.gameScreen.style.display = "none";
-    this.gameEndScreen.style.display = " block";
+    this.gameEndScreen.style.display = "flex";
   }
 
   createPlayer() {
@@ -290,4 +346,11 @@ class Game {
       scale: 1,
     });
   }
+
+  updateInformationUI() {
+    let seconds = Math.floor(this.elapsedTime / 1000);
+    scoreContainer.innerHTML = `time: ${seconds.toLocaleString()} score: ${this.score.toLocaleString()}`;
+  }
+
+  
 }
