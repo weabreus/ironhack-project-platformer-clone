@@ -1,5 +1,6 @@
 class Sprite {
-  constructor({ canvas, canvasContext, position, imgSrc, frameRate = 1, frameBuffer = 8, scale = 1 }) {
+  constructor({ canvas, canvasContext, position, imgSrc, frameRate = 1, frameBuffer = 8, scale = 1, offSet = 0 }) {
+    this.offSet = offSet
     this.canvas = canvas;
     this.canvasContext = canvasContext;
     this.scale = scale;
@@ -25,7 +26,7 @@ class Sprite {
 
   draw() {
     if (!this.loaded) return;
-
+    this.position.x += this.offSet;
     let cropbox = {
       position: {
         x: this.currentFrame * (this.image.width / this.frameRate),

@@ -30,6 +30,16 @@ class Game {
     this.lives = 1;
     this.isGameOver = false;
     this.isGameLost = false;
+    this.foreground = new Sprite({
+      offSet: 0,
+      canvas: this.canvas,
+      canvasContext: this.canvasContext,
+      position: {
+        x: 0,
+        y: 0,
+      },
+      imgSrc: "./images/sky-background.png",
+    });
     this.background = new Sprite({
       canvas: this.canvas,
       canvasContext: this.canvasContext,
@@ -37,8 +47,7 @@ class Game {
         x: 0,
         y: 0,
       },
-      imgSrc:
-        "./images/level1-main-background.png",
+      imgSrc: "./images/foregorund.png",
     });
     this.scaledCanvas = {
       width: this.canvas.width / 2,
@@ -211,7 +220,7 @@ class Game {
 
     this.player.draw();
     this.startTime = Date.now();
-    playMusic();
+    // playMusic();
     this.animationFrameId = window.requestAnimationFrame((timestamp) =>
       this.gameLoop(timestamp)
     );
@@ -268,7 +277,7 @@ class Game {
       this.camera.position.x,
       -this.background.image.height + this.scaledCanvas.height
     );
-
+    this.foreground.update()
     this.background.update();
 
     // render collision blocks

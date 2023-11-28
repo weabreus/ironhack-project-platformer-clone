@@ -70,7 +70,7 @@ window.onload = function () {
       brickCollisions2D
     );
     game.start();
-    playMusic();
+    // playMusic();
   }
 
   window.addEventListener("resize", function () {
@@ -88,12 +88,19 @@ window.onload = function () {
       case "d":
         game.player.keys.d.pressed = true;
         game.player.direction = "right";
+        // if (game.player.velocity.x > 0) {
+        //   game.foreground.offSet = -0.5;
+        // }
+
         // game.player.velocity.x = 1;
         break;
       case "a":
         game.player.keys.a.pressed = true;
         game.player.direction = "left";
         game.player.velocity.x = -1;
+        // if (game.player.velocity < 0) {
+        //   game.foreground.offSet = 0.5;
+        // }
         break;
       case "w":
         if (game.player.jumps > 0) {
@@ -109,12 +116,11 @@ window.onload = function () {
     switch (event.key) {
       case "d":
         game.player.keys.d.pressed = false;
-
+       
         // game.player.velocity.x = 1;
         break;
       case "a":
         game.player.keys.a.pressed = false;
-
         // game.player.velocity.x = -1;
         break;
     }

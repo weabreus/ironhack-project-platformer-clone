@@ -107,6 +107,13 @@ class Player extends Sprite {
     if(!game.isGameLost) this.position.x += this.velocity.x;
     this.updateHitbox();
     this.checkForHorizontalCollisions();
+    if (this.velocity.x > 0) {
+      game.foreground.offSet = -0.25
+    } else if (this.velocity.x < 0) {
+      game.foreground.offSet = 0.25
+    } else {
+      game.foreground.offSet = 0
+    }
     if(!game.isGameLost) this.applyGravity();
     this.updateHitbox();
     // I need to check multiple times for vertical collision based on velocity.y to avoid "Bullet thru paper" effect
