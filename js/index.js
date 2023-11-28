@@ -70,7 +70,7 @@ window.onload = function () {
       brickCollisions2D
     );
     game.start();
-    // playMusic();
+    playMusic();
   }
 
   window.addEventListener("resize", function () {

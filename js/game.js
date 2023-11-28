@@ -220,7 +220,7 @@ class Game {
 
     this.player.draw();
     this.startTime = Date.now();
-    // playMusic();
+    playMusic();
     this.animationFrameId = window.requestAnimationFrame((timestamp) =>
       this.gameLoop(timestamp)
     );
