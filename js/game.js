@@ -37,7 +37,8 @@ class Game {
         x: 0,
         y: 0,
       },
-      imgSrc: "./images/level1-main-background.png",
+      imgSrc:
+        "./images/level1-main-background.png images/level1-main-background.png",
     });
     this.scaledCanvas = {
       width: this.canvas.width / 2,
@@ -117,8 +118,7 @@ class Game {
                 x: x * 16,
                 y: y * 16,
               },
-              imgSrc:
-                "./images/sprites/question-box-inactive-sprite-sheet.png",
+              imgSrc: "./images/sprites/question-box-inactive-sprite-sheet.png",
               frameRate: 4,
               scale: 1,
               player: this.player,
@@ -199,8 +199,7 @@ class Game {
                 x: x * 16,
                 y: y * 16,
               },
-              imgSrc:
-                "./images/sprites/question-box-inactive-sprite-sheet.png",
+              imgSrc: "./images/sprites/question-box-inactive-sprite-sheet.png",
               frameRate: 4,
               scale: 1,
               player: this.player,
