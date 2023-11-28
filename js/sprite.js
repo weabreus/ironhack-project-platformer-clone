@@ -6,7 +6,12 @@ class Sprite {
     this.position = position;
     this.loaded = false;
     this.image = new Image();
-    this.image.src = imgSrc;
+    try {
+      this.image.src = imgSrc;
+    } catch (error) {
+      this.image.src = "/mario-clone" + imgSrc.slice(1, imgSrc.length - 1);
+    }
+    
     this.image.onload = () => {
       this.width = (this.image.width / this.frameRate) * this.scale;
       this.height = (this.image.height) * this.scale;
