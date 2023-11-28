@@ -325,7 +325,7 @@ class Game {
       collisionBlocks: collisionBlocks,
       platformCollisionsBlocks: platformCollisionsBlocks,
       questionBoxesCollisionsBlocks: questionBoxesCollisionsBlocks,
-      imgSrc: "../images/sprites/mario-standing-right.png",
+      imgSrc: "/mario-clone/images/sprites/mario-standing-right.png",
       frameRate: 1,
       animations: {
         idle: {
