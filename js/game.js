@@ -187,6 +187,7 @@ class Game {
 
     this.player.draw();
     this.startTime = Date.now();
+    playMusic();
     this.animationFrameId = window.requestAnimationFrame((timestamp) =>
       this.gameLoop(timestamp)
     );
@@ -276,20 +277,35 @@ class Game {
   }
 
   loseGame() {
+    pauseMusic();
+    playSoundEffectBuffer(deathSoundBuffer);
     this.isGameLost = true;
     this.lostScreen.style.display = "flex";
   }
 
   endGame() {
     this.isGameOver = true;
-    addToLeaderboard({date: formatDate(Date.now()), time: this.elapsedTime, score: this.score});
+    pauseMusic();
+    playSoundEffectBuffer(levelClearBuffer);
+
+    setTimeout(() => {
+      playSoundEffectBuffer(overworldBuffer);
+    }, 3000);
+    
+    addToLeaderboard({
+      date: formatDate(Date.now()),
+      time: this.elapsedTime,
+      score: this.score,
+    });
     let leaderboard = getLeaderboard();
     let sortedLeaderboard = sortLeaderboard(leaderboard);
     let topScores = getTop10Scores(sortedLeaderboard);
     // Here i need to add these scores to the HTML table
-    topScores.forEach((score) => addRowToLeaderboard(score.date, score.time, score.score));
-    this.resultsTimeElement.innerHTML = `final time: ${(
-      Math.floor(this.elapsedTime / 1000)
+    topScores.forEach((score) =>
+      addRowToLeaderboard(score.date, score.time, score.score)
+    );
+    this.resultsTimeElement.innerHTML = `final time: ${Math.floor(
+      this.elapsedTime / 1000
     ).toLocaleString()} seconds`;
     this.resultsScoreElement.innerHTML = `final score: ${this.score.toLocaleString()}`;
     this.gameScreen.style.display = "none";
@@ -351,6 +367,4 @@ class Game {
     let seconds = Math.floor(this.elapsedTime / 1000);
     scoreContainer.innerHTML = `time: ${seconds.toLocaleString()} score: ${this.score.toLocaleString()}`;
   }
-
-  
 }

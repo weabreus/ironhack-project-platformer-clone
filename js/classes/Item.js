@@ -59,6 +59,7 @@ class Item extends Sprite {
           collisionBlock,
         })
       ) {
+        playSoundEffectBuffer(oneUpSoundBuffer);
         if (this.velocity.x > 0) {
           this.velocity.x = -1;
           this.position.x = collisionBlock.position.x - this.width - 0.01;
@@ -84,6 +85,8 @@ class Item extends Sprite {
           collisionBlock,
         })
       ) {
+        playSoundEffectBuffer(oneUpSoundBuffer);
+        
         if (this.velocity.x > 0) {
           this.velocity.x = 0;
           this.position.x = collisionBlock.position.x - 0.01;
@@ -111,17 +114,15 @@ class Item extends Sprite {
           collisionBlock,
         })
       ) {
-        
         if (this.velocity.y > 0) {
-          
           this.velocity.y = 0;
-          this.position.y = collisionBlock.position.y - collisionBlock.height - 0.01;
+          this.position.y =
+            collisionBlock.position.y - collisionBlock.height - 0.01;
           break;
-
         }
 
         if (this.velocity.y < 0) {
-          console.log('collision <');
+          console.log("collision <");
           this.velocity.y = 0;
           this.position.y =
             collisionBlock.position.y + collisionBlock.height + 0.01;
@@ -141,7 +142,8 @@ class Item extends Sprite {
       ) {
         if (this.velocity.y > 0) {
           this.velocity.y = 0;
-          this.position.y = collisionBlock.position.y - collisionBlock.height - 0.01;
+          this.position.y =
+            collisionBlock.position.y - collisionBlock.height - 0.01;
           break;
         }
 
@@ -164,7 +166,8 @@ class Item extends Sprite {
       ) {
         if (this.velocity.y > 0) {
           this.velocity.y = 0;
-          this.position.y = collisionBlock.position.y - collisionBlock.height - 0.01;
+          this.position.y =
+            collisionBlock.position.y - collisionBlock.height - 0.01;
           break;
         }
 
@@ -190,12 +193,13 @@ class Item extends Sprite {
       ) {
         if (this.velocity.y > 0) {
           this.velocity.y = 0;
-          this.position.y = platformCollisionBlock.position.y - platformCollisionBlock.height - 0.01;
+          this.position.y =
+            platformCollisionBlock.position.y -
+            platformCollisionBlock.height -
+            0.01;
           break;
         }
       }
     }
   }
-
-  
 }
