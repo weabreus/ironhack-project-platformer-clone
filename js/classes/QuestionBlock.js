@@ -20,8 +20,10 @@ class QuestionBlock extends Sprite {
   }
 
   checkForBottomCollision() {
+    
     if (this.status === "inactive") {
       if (bottomCollision({ object: this.player, collisionBlock: this })) {
+        playSoundEffectBuffer(bumpSoundBuffer);
         this.status = "activated";
         this.image.src = "../images/sprites/EmptyBlock.png";
         this.frameRate = 1;
@@ -29,6 +31,7 @@ class QuestionBlock extends Sprite {
         stageItems.push(this.object);
         if (this.object instanceof BlockCoin) {
           updateGameScore(this.object.value);
+          playSoundEffectBuffer(coinSoundBuffer);
           setTimeout(() => {
             this.object.status = 'expired';
           }, 3000)

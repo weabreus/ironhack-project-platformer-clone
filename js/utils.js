@@ -99,3 +99,29 @@ function getTop10Scores() {
   const sortedLeaderboard = sortLeaderboard(leaderboard);
   return sortedLeaderboard.slice(0, 10);
 }
+
+function playMusic() {
+  backgroundMusic.play();
+}
+
+function pauseMusic() {
+  backgroundMusic.pause();
+}
+
+function playSoundEffect(soundId) {
+  var sound = document.getElementById(soundId);
+  sound.play();
+}
+
+function loadSoundEffect(url) {
+  return fetch(url)
+      .then(response => response.arrayBuffer())
+      .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer));
+}
+
+function playSoundEffectBuffer(buffer) {
+  var source = audioContext.createBufferSource();
+  source.buffer = buffer;
+  source.connect(audioContext.destination);
+  source.start(0);
+}

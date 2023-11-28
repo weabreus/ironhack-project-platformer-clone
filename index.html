@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles/styles.css" />
     <title>Super Mario Bros. 3 - Clone</title>
+    <link rel="shortcut icon" href="./images/smb3.ico" type="image/x-icon">
   </head>
   <body>
     <main>
@@ -55,13 +56,12 @@
           </div>
         </div>
       </div>
-
       <div id="game-end">
         <div id="game-end-result" class="message-window mariofont">
           <p>level cleared!</p>
           <p id="results-time-element">final time: </p>
           <p id="results-score-element">final score: </p>
-          <button class="mariofont">continue</button>
+          <button id="game-end-continue-button" class="mariofont">continue</button>
         </div>
         <div id="leaderboards" class="message-window mariofont">
           <p>leaderboards</p>
@@ -79,6 +79,10 @@
           </table>
         </div>
       </div>
+      <audio id="background-music" loop>
+        <source src="./audio/level-music/01. World Map 1 - Grass Land.mp3" type="audio/mpeg">
+      </audio>
+      <audio id="sfxJump" src="./audio/sfx/Mario Jump.wav" preload="auto"></audio>
     </main>
     <script type="text/javascript" src="./js/utils.js"></script>
     <script type="text/javascript" src="./js/data/collisions.js"></script>

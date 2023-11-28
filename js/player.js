@@ -315,6 +315,7 @@ class Player extends Sprite {
           collisionBlock,
         })
       ) {
+        playSoundEffectBuffer(oneUpSoundBuffer);
         updateGameScore(stageItems[i].value);
         stageItems.splice(i, 1);
       }

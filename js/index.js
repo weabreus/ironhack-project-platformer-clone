@@ -1,16 +1,58 @@
 // Global variables
 let game;
 let scoreContainer;
+let backgroundMusic;
 
 const gravity = 0.5;
 const targetFPS = 60;
 const frameDelay = 1000 / targetFPS;
 let lastFrameTime = 0;
 
+let audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+let jumpSoundBuffer;
+let bumpSoundBuffer;
+let coinSoundBuffer;
+let oneUpSoundBuffer;
+let deathSoundBuffer;
+let levelClearBuffer;
+let overworldBuffer;
+
+loadSoundEffect("../audio/sfx/Mario Jump.wav").then(buffer => {
+  jumpSoundBuffer = buffer;
+});
+
+loadSoundEffect("../audio/sfx/smb3_bump.wav").then(buffer => {
+  bumpSoundBuffer = buffer;
+});
+
+loadSoundEffect("../audio/sfx/Coin.wav").then(buffer => {
+  coinSoundBuffer = buffer;
+})
+
+loadSoundEffect("../audio/sfx/smb3_1-up.wav").then(buffer => {
+  oneUpSoundBuffer = buffer;
+})
+
+loadSoundEffect("../audio/sfx/Death.wav").then(buffer => {
+  deathSoundBuffer = buffer;
+})
+
+loadSoundEffect("../audio/sfx/smb3_level_clear.wav").then(buffer => {
+  levelClearBuffer = buffer;
+})
+
+loadSoundEffect("../audio/sfx/overworld.mp3").then(buffer => {
+  overworldBuffer = buffer;
+})
+
 window.onload = function () {
+  backgroundMusic = document.getElementById("background-music");
+  
   let startButton = document.getElementById("start-button");
   let continueButton = document.getElementById("continue-button");
   let endButton = document.getElementById("end-button");
+  let continueButtonEnd = document.getElementById("game-end-continue-button");
   scoreContainer = document.getElementById("score");
 
   startButton.addEventListener("click", function () {
@@ -27,6 +69,7 @@ window.onload = function () {
       endGameCollisions2D
     );
     game.start();
+    playMusic();
   }
 
   window.addEventListener("resize", function () {
@@ -53,6 +96,7 @@ window.onload = function () {
         break;
       case "w":
         game.player.velocity.y = -18 / 2;
+        playSoundEffectBuffer(jumpSoundBuffer);
         break;
     }
   });
@@ -89,6 +133,10 @@ window.onload = function () {
     });
 
     endButton.addEventListener("click", () => {
+      location.reload();
+    })
+
+    continueButtonEnd.addEventListener("click", () => {
       location.reload();
     })
   });
