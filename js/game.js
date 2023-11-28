@@ -1,5 +1,10 @@
+let collisionBlocks = [];
+let platformCollisionsBlocks = [];
+let questionBoxesCollisionsBlocks = [];
+let stageItems = [];
+
 class Game {
-  constructor(floorCollisions, platformCollisions) {
+  constructor(floorCollisions, platformCollisions, questionBoxesCollisions) {
     this.startScreen = document.getElementById("game-intro");
     this.gameScreen = document.getElementById("game-container");
     this.gameEndScreen = document.getElementById("game-end");
@@ -24,9 +29,11 @@ class Game {
       height: this.canvas.height / 2,
     };
     this.floorCollisions = floorCollisions;
-    this.collisionBlocks = [];
+
     this.platformCollisions = platformCollisions;
-    this.platformCollisionsBlocks = [];
+
+    this.questionBoxesCollisions = questionBoxesCollisions;
+
     this.camera = {
       position: {
         x: 0,
@@ -48,7 +55,7 @@ class Game {
     this.floorCollisions.forEach((row, y) => {
       row.forEach((symbol, x) => {
         if (symbol === 4753) {
-          this.collisionBlocks.push(
+          collisionBlocks.push(
             new CollisionBlock({
               canvas: this.canvas,
               canvasContext: this.canvasContext,
@@ -63,7 +70,7 @@ class Game {
     this.platformCollisions.forEach((row, y) => {
       row.forEach((symbol, x) => {
         if (symbol === 4753) {
-          this.platformCollisionsBlocks.push(
+          platformCollisionsBlocks.push(
             new CollisionBlock({
               canvas: this.canvas,
               canvasContext: this.canvasContext,
@@ -87,8 +94,9 @@ class Game {
         x: 50,
         y: 100,
       },
-      collisionBlocks: this.collisionBlocks,
-      platformCollisionsBlocks: this.platformCollisionsBlocks,
+      collisionBlocks: collisionBlocks,
+      platformCollisionsBlocks: platformCollisionsBlocks,
+      questionBoxesCollisionsBlocks: questionBoxesCollisionsBlocks,
       imgSrc: "../images/sprites/mario-standing-right.png",
       frameRate: 1,
       animations: {
@@ -124,6 +132,29 @@ class Game {
         },
       },
       scale: 1,
+    });
+
+    // add questionBoxes collision blocks to the array
+    this.questionBoxesCollisions.forEach((row, y) => {
+      row.forEach((symbol, x) => {
+        if (symbol === 4753) {
+          questionBoxesCollisionsBlocks.push(
+            new QuestionBlock({
+              canvas: this.canvas,
+              canvasContext: this.canvasContext,
+              position: {
+                x: x * 16,
+                y: y * 16,
+              },
+              imgSrc:
+                "../images/sprites/question-box-inactive-sprite-sheet.png",
+              frameRate: 4,
+              scale: 1,
+              player: this.player,
+            })
+          );
+        }
+      });
     });
 
     this.player.draw();
@@ -177,13 +208,25 @@ class Game {
       this.camera.position.x,
       -this.background.image.height + this.scaledCanvas.height
     );
-    this.background.update();
-    // render collision blocks
-    this.collisionBlocks.forEach((block) => block.update());
-    // render platform collision blocks
-    this.platformCollisionsBlocks.forEach((block) => block.update());
 
+    this.background.update();
+
+    // render collision blocks
+    collisionBlocks.forEach((block) => block.update());
+    // render platform collision blocks
+    platformCollisionsBlocks.forEach((block) => block.update());
+    // render questionBox collision block
+    questionBoxesCollisionsBlocks.forEach((block) => block.update());
     this.player.checkForHorizontalCanvasCollision();
+    // Render stage items
+    stageItems.forEach((item, index) => {
+      if (item instanceof BlockCoin) {
+        if(item.status === 'expired') return stageItems.splice(index, 1);
+        item.update();
+      } else {
+        item.move();
+      }
+    });
     // Update the player position in each frame
     this.player.move();
 

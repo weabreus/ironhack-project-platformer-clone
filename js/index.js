@@ -1,4 +1,7 @@
 // Global variables
+let game;
+let scoreContainer;
+
 const gravity = 0.5;
 const targetFPS = 60;
 const frameDelay = 1000 / targetFPS;
@@ -6,7 +9,7 @@ let lastFrameTime = 0;
 
 window.onload = function () {
   let startButton = document.getElementById("start-button");
-  let game;
+  scoreContainer = document.getElementById("score");
   startButton.addEventListener("click", function () {
     startGame();
   });
@@ -14,7 +17,7 @@ window.onload = function () {
   function startGame() {
     console.log("start game");
 
-    game = new Game(floorCollisions2D, platformCollisions2D);
+    game = new Game(floorCollisions2D, platformCollisions2D, questionBoxesCollisions2D);
     game.start();
   }
 
