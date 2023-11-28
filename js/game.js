@@ -47,6 +47,7 @@ class Game {
         x: 0,
         y: 0,
       },
+
       imgSrc: "./images/foregorund.png",
     });
     this.scaledCanvas = {
@@ -362,6 +363,7 @@ class Game {
       collisionBlocks: collisionBlocks,
       platformCollisionsBlocks: platformCollisionsBlocks,
       questionBoxesCollisionsBlocks: questionBoxesCollisionsBlocks,
+
       imgSrc: "./images/sprites/mario-standing-right.png",
       frameRate: 1,
       animations: {

@@ -18,6 +18,7 @@ let deathSoundBuffer;
 let levelClearBuffer;
 let overworldBuffer;
 
+
 loadSoundEffect("./audio/sfx/Mario Jump.wav").then((buffer) => {
   jumpSoundBuffer = buffer;
 });
@@ -29,6 +30,7 @@ loadSoundEffect("./audio/sfx/smb3_bump.wav").then((buffer) => {
 loadSoundEffect("./audio/sfx/Coin.wav").then((buffer) => {
   coinSoundBuffer = buffer;
 });
+
 
 loadSoundEffect("./audio/sfx/smb3_1-up.wav").then((buffer) => {
   oneUpSoundBuffer = buffer;
