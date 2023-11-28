@@ -35,7 +35,7 @@ class Game {
         x: 0,
         y: 0,
       },
-      imgSrc: "../images/level1-main-background.png",
+      imgSrc: "/mario-clone/images/level1-main-background.png",
     });
     this.scaledCanvas = {
       width: this.canvas.width / 2,
@@ -115,7 +115,7 @@ class Game {
                 y: y * 16,
               },
               imgSrc:
-                "../images/sprites/question-box-inactive-sprite-sheet.png",
+                "/mario-clone/images/sprites/question-box-inactive-sprite-sheet.png",
               frameRate: 4,
               scale: 1,
               player: this.player,
@@ -137,7 +137,7 @@ class Game {
                 x: x * 16 - 5,
                 y: y * 16 - 5,
               },
-              imgSrc: "../images/sprites/end-game-cards.png",
+              imgSrc: "/mario-clone/images/sprites/end-game-cards.png",
               frameRate: 3,
               scale: 1,
               player: this.player,
@@ -175,7 +175,7 @@ class Game {
                 y: y * 16,
               },
               imgSrc:
-                "../images/sprites/question-box-inactive-sprite-sheet.png",
+                "/mario-clone/images/sprites/question-box-inactive-sprite-sheet.png",
               frameRate: 4,
               scale: 1,
               player: this.player,
@@ -329,32 +329,32 @@ class Game {
       frameRate: 1,
       animations: {
         idle: {
-          imgSrc: "../images/sprites/mario-standing-right.png",
+          imgSrc: "/mario-clone/images/sprites/mario-standing-right.png",
           frameRate: 1,
           frameBuffer: 8,
         },
         idleLeft: {
-          imgSrc: "../images/sprites/mario-standing-left.png",
+          imgSrc: "/mario-clone/images/sprites/mario-standing-left.png",
           frameRate: 1,
           frameBuffer: 8,
         },
         run: {
-          imgSrc: "../images/sprites/mario-running.png",
+          imgSrc: "/mario-clone/images/sprites/mario-running.png",
           frameRate: 2,
           frameBuffer: 8,
         },
         runLeft: {
-          imgSrc: "../images/sprites/mario-running-left.png",
+          imgSrc: "/mario-clone/images/sprites/mario-running-left.png",
           frameRate: 2,
           frameBuffer: 8,
         },
         jump: {
-          imgSrc: "../images/sprites/mario-jumping-right.png",
+          imgSrc: "/mario-clone/images/sprites/mario-jumping-right.png",
           frameRate: 1,
           frameBuffer: 8,
         },
         jumpLeft: {
-          imgSrc: "../images/sprites/mario-jumping-left.png",
+          imgSrc: "/mario-clone/images/sprites/mario-jumping-left.png",
           frameRate: 1,
           frameBuffer: 8,
         },
