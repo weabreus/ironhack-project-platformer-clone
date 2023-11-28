@@ -18,31 +18,31 @@ let deathSoundBuffer;
 let levelClearBuffer;
 let overworldBuffer;
 
-loadSoundEffect("/mario-clone/audio/sfx/Mario Jump.wav").then(buffer => {
+loadSoundEffect("https://weabreus.github.io//mario-clone/audio/sfx/Mario Jump.wav").then(buffer => {
   jumpSoundBuffer = buffer;
 });
 
-loadSoundEffect("/mario-clone/audio/sfx/smb3_bump.wav").then(buffer => {
+loadSoundEffect("https://weabreus.github.io//mario-clone/audio/sfx/smb3_bump.wav").then(buffer => {
   bumpSoundBuffer = buffer;
 });
 
-loadSoundEffect("/mario-clone/audio/sfx/Coin.wav").then(buffer => {
+loadSoundEffect("https://weabreus.github.io//mario-clone/audio/sfx/Coin.wav").then(buffer => {
   coinSoundBuffer = buffer;
 })
 
-loadSoundEffect("/mario-clone/audio/sfx/smb3_1-up.wav").then(buffer => {
+loadSoundEffect("https://weabreus.github.io//mario-clone/audio/sfx/smb3_1-up.wav").then(buffer => {
   oneUpSoundBuffer = buffer;
 })
 
-loadSoundEffect("/mario-clone/audio/sfx/Death.wav").then(buffer => {
+loadSoundEffect("https://weabreus.github.io//mario-clone/audio/sfx/Death.wav").then(buffer => {
   deathSoundBuffer = buffer;
 })
 
-loadSoundEffect("/mario-clone/audio/sfx/smb3_level_clear.wav").then(buffer => {
+loadSoundEffect("https://weabreus.github.io//mario-clone/audio/sfx/smb3_level_clear.wav").then(buffer => {
   levelClearBuffer = buffer;
 })
 
-loadSoundEffect("/mario-clone/audio/sfx/overworld.mp3").then(buffer => {
+loadSoundEffect("https://weabreus.github.io//mario-clone/audio/sfx/overworld.mp3").then(buffer => {
   overworldBuffer = buffer;
 })
 
