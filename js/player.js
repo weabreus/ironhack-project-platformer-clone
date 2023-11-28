@@ -11,6 +11,7 @@ class Player extends Sprite {
     scale = 1,
   }) {
     super({ imgSrc, frameRate, scale });
+    this.jumps = 2;
     this.background = background;
     this.camera = camera;
     this.canvas = canvas;
@@ -277,11 +278,16 @@ class Player extends Sprite {
         }
 
         if (this.velocity.y < 0) {
+          
           this.velocity.y = 0;
           const offset = this.hitbox.position.y - this.position.y;
           this.position.y =
             collisionBlock.position.y + collisionBlock.height - offset + 0.01;
           break;
+        }
+
+        if (this.velocity.y === 0) {
+          this.jumps = 2;
         }
       }
     }
@@ -310,6 +316,10 @@ class Player extends Sprite {
             collisionBlock.position.y + collisionBlock.height - offset + 0.01;
           break;
         }
+
+        if (this.velocity.y === 0) {
+          this.jumps = 2;
+        }
       }
     }
 
@@ -330,6 +340,10 @@ class Player extends Sprite {
             this.hitbox.position.y - this.position.y + this.hitbox.height;
           this.position.y = platformCollisionBlock.position.y - offset - 0.01;
           break;
+        }
+
+        if (this.velocity.y === 0) {
+          this.jumps = 2;
         }
       }
     }
@@ -375,6 +389,10 @@ class Player extends Sprite {
             collisionBlock.position.y + collisionBlock.height - offset + 0.01;
           break;
         }
+
+        if (this.velocity.y === 0) {
+          this.jumps = 2;
+        }
       }
     }
   }
@@ -390,7 +408,6 @@ class Player extends Sprite {
 
   checkIfGameLost() {
     if (this.hitbox.position.y + this.hitbox.height > this.canvas.height) {
-      console.log("fell off");
       game.loseGame();
       this.velocity.y = 0;
       this.position.y = this.canvas.height - 200;
