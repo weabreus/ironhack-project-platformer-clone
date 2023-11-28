@@ -118,7 +118,7 @@ class Game {
                 y: y * 16,
               },
               imgSrc:
-                "../images/sprites/question-box-inactive-sprite-sheet.png",
+                "./images/sprites/question-box-inactive-sprite-sheet.png",
               frameRate: 4,
               scale: 1,
               player: this.player,
@@ -140,7 +140,7 @@ class Game {
                 x: x * 16 - 5,
                 y: y * 16 - 5,
               },
-              imgSrc: "../images/sprites/end-game-cards.png",
+              imgSrc: "./images/sprites/end-game-cards.png",
               frameRate: 3,
               scale: 1,
               player: this.player,
@@ -162,7 +162,7 @@ class Game {
                 x: x * 16,
                 y: y * 16,
               },
-              imgSrc: "../images/sprites/brick-sprite-sheet.png",
+              imgSrc: "./images/sprites/brick-sprite-sheet.png",
               frameRate: 4,
               scale: 1,
               player: this.player,
@@ -200,7 +200,7 @@ class Game {
                 y: y * 16,
               },
               imgSrc:
-                "../images/sprites/question-box-inactive-sprite-sheet.png",
+                "./images/sprites/question-box-inactive-sprite-sheet.png",
               frameRate: 4,
               scale: 1,
               player: this.player,
@@ -325,6 +325,7 @@ class Game {
       time: this.elapsedTime,
       score: this.score,
     });
+
     let leaderboard = getLeaderboard();
     let sortedLeaderboard = sortLeaderboard(leaderboard);
     let topScores = getTop10Scores(sortedLeaderboard);
@@ -353,36 +354,36 @@ class Game {
       collisionBlocks: collisionBlocks,
       platformCollisionsBlocks: platformCollisionsBlocks,
       questionBoxesCollisionsBlocks: questionBoxesCollisionsBlocks,
-      imgSrc: "../images/sprites/mario-standing-right.png",
+      imgSrc: "./images/sprites/mario-standing-right.png",
       frameRate: 1,
       animations: {
         idle: {
-          imgSrc: "../images/sprites/mario-standing-right.png",
+          imgSrc: "./images/sprites/mario-standing-right.png",
           frameRate: 1,
           frameBuffer: 8,
         },
         idleLeft: {
-          imgSrc: "../images/sprites/mario-standing-left.png",
+          imgSrc: "./images/sprites/mario-standing-left.png",
           frameRate: 1,
           frameBuffer: 8,
         },
         run: {
-          imgSrc: "../images/sprites/mario-running.png",
+          imgSrc: "./images/sprites/mario-running.png",
           frameRate: 2,
           frameBuffer: 8,
         },
         runLeft: {
-          imgSrc: "../images/sprites/mario-running-left.png",
+          imgSrc: "./images/sprites/mario-running-left.png",
           frameRate: 2,
           frameBuffer: 8,
         },
         jump: {
-          imgSrc: "../images/sprites/mario-jumping-right.png",
+          imgSrc: "./images/sprites/mario-jumping-right.png",
           frameRate: 1,
           frameBuffer: 8,
         },
         jumpLeft: {
-          imgSrc: "../images/sprites/mario-jumping-left.png",
+          imgSrc: "./images/sprites/mario-jumping-left.png",
           frameRate: 1,
           frameBuffer: 8,
         },
