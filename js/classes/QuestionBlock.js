@@ -25,7 +25,7 @@ class QuestionBlock extends Sprite {
       if (bottomCollision({ object: this.player, collisionBlock: this })) {
         playSoundEffectBuffer(bumpSoundBuffer);
         this.status = "activated";
-        this.image.src = "../images/sprites/EmptyBlock.png";
+        this.image.src = "/mario-clone/images/sprites/EmptyBlock.png";
         this.frameRate = 1;
         this.object = this.generateRandomItem();
         stageItems.push(this.object);
