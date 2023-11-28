@@ -2,6 +2,7 @@ let collisionBlocks = [];
 let platformCollisionsBlocks = [];
 let questionBoxesCollisionsBlocks = [];
 let endGameCollisionsBlocks = [];
+let bricksCollisionsBlocks = [];
 let stageItems = [];
 
 class Game {
@@ -9,7 +10,8 @@ class Game {
     floorCollisions,
     platformCollisions,
     questionBoxesCollisions,
-    endGameCollisions
+    endGameCollisions,
+    brickCollisions
   ) {
     this.startTime = null;
     this.elapsedTime = 0;
@@ -47,6 +49,7 @@ class Game {
 
     this.questionBoxesCollisions = questionBoxesCollisions;
     this.endGameCollisions = endGameCollisions;
+    this.brickCollisions = brickCollisions;
 
     this.camera = {
       position: {
@@ -146,7 +149,29 @@ class Game {
         }
       });
     });
-    console.log(endGameCollisionsBlocks);
+
+    // add bricks collision blocks to the array
+    this.brickCollisions.forEach((row, y) => {
+      row.forEach((symbol, x) => {
+        if (symbol === 4753) {
+          bricksCollisionsBlocks.push(
+            new BrickBlock({
+              canvas: this.canvas,
+              canvasContext: this.canvasContext,
+              position: {
+                x: x * 16,
+                y: y * 16,
+              },
+              imgSrc: "../images/sprites/brick-sprite-sheet.png",
+              frameRate: 4,
+              scale: 1,
+              player: this.player,
+            })
+          );
+        }
+      });
+    });
+
     this.player.draw();
     this.startTime = Date.now();
     this.animationFrameId = window.requestAnimationFrame((timestamp) =>
@@ -253,6 +278,9 @@ class Game {
     // platformCollisionsBlocks.forEach((block) => block.update());
     // render questionBox collision block
     questionBoxesCollisionsBlocks.forEach((block) => block.update());
+
+    // render brick blocks
+    bricksCollisionsBlocks.forEach((block) => block.update());
     // render end game cards collision block
     endGameCollisionsBlocks.forEach((block) => block.update());
 
@@ -291,7 +319,7 @@ class Game {
     setTimeout(() => {
       playSoundEffectBuffer(overworldBuffer);
     }, 3000);
-    
+
     addToLeaderboard({
       date: formatDate(Date.now()),
       time: this.elapsedTime,

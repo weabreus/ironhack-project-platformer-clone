@@ -66,7 +66,8 @@ window.onload = function () {
       floorCollisions2D,
       platformCollisions2D,
       questionBoxesCollisions2D,
-      endGameCollisions2D
+      endGameCollisions2D,
+      brickCollisions2D
     );
     game.start();
     playMusic();
