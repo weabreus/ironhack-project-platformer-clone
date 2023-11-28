@@ -248,9 +248,9 @@ class Game {
     this.background.update();
 
     // render collision blocks
-    collisionBlocks.forEach((block) => block.update());
+    // collisionBlocks.forEach((block) => block.update());
     // render platform collision blocks
-    platformCollisionsBlocks.forEach((block) => block.update());
+    // platformCollisionsBlocks.forEach((block) => block.update());
     // render questionBox collision block
     questionBoxesCollisionsBlocks.forEach((block) => block.update());
     // render end game cards collision block

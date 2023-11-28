@@ -8,7 +8,6 @@ class Sprite {
     this.image = new Image();
     this.image.src = imgSrc;
     this.image.onload = () => {
-      console.log(imgSrc);
       this.width = (this.image.width / this.frameRate) * this.scale;
       this.height = (this.image.height) * this.scale;
       this.loaded = true;
