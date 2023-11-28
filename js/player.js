@@ -71,6 +71,7 @@ class Player extends Sprite {
   //   }
 
   move() {
+    this.checkIfGameLost();
     this.updateFrames();
     this.updateHitbox();
     this.updateCamerabox();
@@ -102,10 +103,10 @@ class Player extends Sprite {
 
     this.update();
 
-    this.position.x += this.velocity.x;
+    if(!game.isGameLost) this.position.x += this.velocity.x;
     this.updateHitbox();
     this.checkForHorizontalCollisions();
-    this.applyGravity();
+    if(!game.isGameLost) this.applyGravity();
     this.updateHitbox();
     // I need to check multiple times for vertical collision based on velocity.y to avoid "Bullet thru paper" effect
     let numberOfChecks = Math.abs(Math.ceil(this.velocity.y * 2));
@@ -327,5 +328,20 @@ class Player extends Sprite {
     this.image = this.animations[key].image;
     this.frameRate = this.animations[key].frameRate;
     this.frameBuffer = this.animations[key].frameBuffer;
+  }
+
+  checkIfGameLost() {
+    if (this.hitbox.position.y + this.hitbox.height > this.canvas.height) {
+      console.log("fell off");
+      game.loseGame();
+      this.velocity.y = 0;
+      this.position.y = this.canvas.height - 200;
+      this.hitbox.position.y = this.canvas.height - 200;
+      
+
+      return true;
+    } else {
+      return false;
+    }
   }
 }
