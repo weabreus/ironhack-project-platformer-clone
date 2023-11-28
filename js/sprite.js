@@ -1,14 +1,19 @@
 class Sprite {
-  constructor({ canvas, canvasContext, position, imgSrc, frameRate = 1, frameBuffer = 8, scale = 1 }) {
+  constructor({ canvas, canvasContext, position, imgSrc, frameRate = 1, frameBuffer = 8, scale = 1, offSet = 0 }) {
+    this.offSet = offSet
     this.canvas = canvas;
     this.canvasContext = canvasContext;
     this.scale = scale;
     this.position = position;
     this.loaded = false;
     this.image = new Image();
-    this.image.src = imgSrc;
+    try {
+      this.image.src = imgSrc;
+    } catch (error) {
+      this.image.src = "/mario-clone" + imgSrc.slice(1, imgSrc.length - 1);
+    }
+    
     this.image.onload = () => {
-      console.log(imgSrc);
       this.width = (this.image.width / this.frameRate) * this.scale;
       this.height = (this.image.height) * this.scale;
       this.loaded = true;
@@ -21,7 +26,7 @@ class Sprite {
 
   draw() {
     if (!this.loaded) return;
-
+    this.position.x += this.offSet;
     let cropbox = {
       position: {
         x: this.currentFrame * (this.image.width / this.frameRate),

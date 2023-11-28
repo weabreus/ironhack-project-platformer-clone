@@ -4,7 +4,7 @@ class SuperMushroom extends Item {
       canvas,
       canvasContext,
       position,
-      imgSrc: "/mario-clone/images/sprites/SuperMushroom.png",
+      imgSrc: "./images/sprites/SuperMushroom.png",
       frameRate: 1,
       scale: 1,
       value: 1000,

@@ -11,6 +11,7 @@ class Player extends Sprite {
     scale = 1,
   }) {
     super({ imgSrc, frameRate, scale });
+    this.jumps = 2;
     this.background = background;
     this.camera = camera;
     this.canvas = canvas;
@@ -106,6 +107,13 @@ class Player extends Sprite {
     if(!game.isGameLost) this.position.x += this.velocity.x;
     this.updateHitbox();
     this.checkForHorizontalCollisions();
+    if (this.velocity.x > 0) {
+      game.foreground.offSet = -0.25
+    } else if (this.velocity.x < 0) {
+      game.foreground.offSet = 0.25
+    } else {
+      game.foreground.offSet = 0
+    }
     if(!game.isGameLost) this.applyGravity();
     this.updateHitbox();
     // I need to check multiple times for vertical collision based on velocity.y to avoid "Bullet thru paper" effect
@@ -212,6 +220,35 @@ class Player extends Sprite {
         }
       }
     }
+
+    // horizontal collision with bricks
+    for (let i = 0; i < bricksCollisionsBlocks.length; i++) {
+      const collisionBlock = bricksCollisionsBlocks[i];
+
+      if (
+        collision({
+          object: this.hitbox,
+          collisionBlock,
+        })
+      ) {
+        if (this.velocity.x > 0) {
+          this.velocity.x = 0;
+          const offset =
+            this.hitbox.position.x - this.position.x + this.hitbox.width;
+          this.position.x = collisionBlock.position.x - offset - 0.01;
+          break;
+        }
+
+        if (this.velocity.x < 0) {
+          this.velocity.x = 0;
+          const offset = this.hitbox.position.x - this.position.x;
+          this.position.x =
+            collisionBlock.position.x + collisionBlock.width - offset + 0.01;
+          break;
+        }
+      }
+    }
+
   }
 
   checkForHorizontalCanvasCollision() {
@@ -248,11 +285,16 @@ class Player extends Sprite {
         }
 
         if (this.velocity.y < 0) {
+          
           this.velocity.y = 0;
           const offset = this.hitbox.position.y - this.position.y;
           this.position.y =
             collisionBlock.position.y + collisionBlock.height - offset + 0.01;
           break;
+        }
+
+        if (this.velocity.y === 0) {
+          this.jumps = 2;
         }
       }
     }
@@ -281,6 +323,10 @@ class Player extends Sprite {
             collisionBlock.position.y + collisionBlock.height - offset + 0.01;
           break;
         }
+
+        if (this.velocity.y === 0) {
+          this.jumps = 2;
+        }
       }
     }
 
@@ -302,6 +348,10 @@ class Player extends Sprite {
           this.position.y = platformCollisionBlock.position.y - offset - 0.01;
           break;
         }
+
+        if (this.velocity.y === 0) {
+          this.jumps = 2;
+        }
       }
     }
 
@@ -320,6 +370,38 @@ class Player extends Sprite {
         stageItems.splice(i, 1);
       }
     }
+
+    //check collision with bricks
+    for (let i = 0; i < bricksCollisionsBlocks.length; i++) {
+      const collisionBlock = bricksCollisionsBlocks[i];
+
+      if (
+        collision({
+          object: this.hitbox,
+          collisionBlock,
+        })
+      ) {
+        if (this.velocity.y > 0) {
+          this.velocity.y = 0;
+          const offset =
+            this.hitbox.position.y - this.position.y + this.hitbox.height;
+          this.position.y = collisionBlock.position.y - offset - 0.01;
+          break;
+        }
+
+        if (this.velocity.y < 0) {
+          this.velocity.y = 0;
+          const offset = this.hitbox.position.y - this.position.y;
+          this.position.y =
+            collisionBlock.position.y + collisionBlock.height - offset + 0.01;
+          break;
+        }
+
+        if (this.velocity.y === 0) {
+          this.jumps = 2;
+        }
+      }
+    }
   }
 
   switchSprite(key) {
@@ -333,7 +415,6 @@ class Player extends Sprite {
 
   checkIfGameLost() {
     if (this.hitbox.position.y + this.hitbox.height > this.canvas.height) {
-      console.log("fell off");
       game.loseGame();
       this.velocity.y = 0;
       this.position.y = this.canvas.height - 200;

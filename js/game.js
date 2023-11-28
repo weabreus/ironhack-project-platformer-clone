@@ -2,6 +2,7 @@ let collisionBlocks = [];
 let platformCollisionsBlocks = [];
 let questionBoxesCollisionsBlocks = [];
 let endGameCollisionsBlocks = [];
+let bricksCollisionsBlocks = [];
 let stageItems = [];
 
 class Game {
@@ -9,7 +10,8 @@ class Game {
     floorCollisions,
     platformCollisions,
     questionBoxesCollisions,
-    endGameCollisions
+    endGameCollisions,
+    brickCollisions
   ) {
     this.startTime = null;
     this.elapsedTime = 0;
@@ -28,6 +30,16 @@ class Game {
     this.lives = 1;
     this.isGameOver = false;
     this.isGameLost = false;
+    this.foreground = new Sprite({
+      offSet: 0,
+      canvas: this.canvas,
+      canvasContext: this.canvasContext,
+      position: {
+        x: 0,
+        y: 0,
+      },
+      imgSrc: "./images/sky-background.png",
+    });
     this.background = new Sprite({
       canvas: this.canvas,
       canvasContext: this.canvasContext,
@@ -35,7 +47,8 @@ class Game {
         x: 0,
         y: 0,
       },
-      imgSrc: "/mario-clone/images/level1-main-background.png",
+
+      imgSrc: "./images/foregorund.png",
     });
     this.scaledCanvas = {
       width: this.canvas.width / 2,
@@ -47,6 +60,7 @@ class Game {
 
     this.questionBoxesCollisions = questionBoxesCollisions;
     this.endGameCollisions = endGameCollisions;
+    this.brickCollisions = brickCollisions;
 
     this.camera = {
       position: {
@@ -114,8 +128,7 @@ class Game {
                 x: x * 16,
                 y: y * 16,
               },
-              imgSrc:
-                "/mario-clone/images/sprites/question-box-inactive-sprite-sheet.png",
+              imgSrc: "./images/sprites/question-box-inactive-sprite-sheet.png",
               frameRate: 4,
               scale: 1,
               player: this.player,
@@ -137,7 +150,7 @@ class Game {
                 x: x * 16 - 5,
                 y: y * 16 - 5,
               },
-              imgSrc: "/mario-clone/images/sprites/end-game-cards.png",
+              imgSrc: "./images/sprites/end-game-cards.png",
               frameRate: 3,
               scale: 1,
               player: this.player,
@@ -146,7 +159,29 @@ class Game {
         }
       });
     });
-    console.log(endGameCollisionsBlocks);
+
+    // add bricks collision blocks to the array
+    this.brickCollisions.forEach((row, y) => {
+      row.forEach((symbol, x) => {
+        if (symbol === 4753) {
+          bricksCollisionsBlocks.push(
+            new BrickBlock({
+              canvas: this.canvas,
+              canvasContext: this.canvasContext,
+              position: {
+                x: x * 16,
+                y: y * 16,
+              },
+              imgSrc: "./images/sprites/brick-sprite-sheet.png",
+              frameRate: 4,
+              scale: 1,
+              player: this.player,
+            })
+          );
+        }
+      });
+    });
+
     this.player.draw();
     this.startTime = Date.now();
     this.animationFrameId = window.requestAnimationFrame((timestamp) =>
@@ -174,8 +209,7 @@ class Game {
                 x: x * 16,
                 y: y * 16,
               },
-              imgSrc:
-                "/mario-clone/images/sprites/question-box-inactive-sprite-sheet.png",
+              imgSrc: "./images/sprites/question-box-inactive-sprite-sheet.png",
               frameRate: 4,
               scale: 1,
               player: this.player,
@@ -244,15 +278,18 @@ class Game {
       this.camera.position.x,
       -this.background.image.height + this.scaledCanvas.height
     );
-
+    this.foreground.update()
     this.background.update();
 
     // render collision blocks
-    collisionBlocks.forEach((block) => block.update());
+    // collisionBlocks.forEach((block) => block.update());
     // render platform collision blocks
-    platformCollisionsBlocks.forEach((block) => block.update());
+    // platformCollisionsBlocks.forEach((block) => block.update());
     // render questionBox collision block
     questionBoxesCollisionsBlocks.forEach((block) => block.update());
+
+    // render brick blocks
+    bricksCollisionsBlocks.forEach((block) => block.update());
     // render end game cards collision block
     endGameCollisionsBlocks.forEach((block) => block.update());
 
@@ -291,12 +328,13 @@ class Game {
     setTimeout(() => {
       playSoundEffectBuffer(overworldBuffer);
     }, 3000);
-    
+
     addToLeaderboard({
       date: formatDate(Date.now()),
       time: this.elapsedTime,
       score: this.score,
     });
+
     let leaderboard = getLeaderboard();
     let sortedLeaderboard = sortLeaderboard(leaderboard);
     let topScores = getTop10Scores(sortedLeaderboard);
@@ -325,36 +363,37 @@ class Game {
       collisionBlocks: collisionBlocks,
       platformCollisionsBlocks: platformCollisionsBlocks,
       questionBoxesCollisionsBlocks: questionBoxesCollisionsBlocks,
-      imgSrc: "/mario-clone/images/sprites/mario-standing-right.png",
+
+      imgSrc: "./images/sprites/mario-standing-right.png",
       frameRate: 1,
       animations: {
         idle: {
-          imgSrc: "/mario-clone/images/sprites/mario-standing-right.png",
+          imgSrc: "./images/sprites/mario-standing-right.png",
           frameRate: 1,
           frameBuffer: 8,
         },
         idleLeft: {
-          imgSrc: "/mario-clone/images/sprites/mario-standing-left.png",
+          imgSrc: "./images/sprites/mario-standing-left.png",
           frameRate: 1,
           frameBuffer: 8,
         },
         run: {
-          imgSrc: "/mario-clone/images/sprites/mario-running.png",
+          imgSrc: "./images/sprites/mario-running.png",
           frameRate: 2,
           frameBuffer: 8,
         },
         runLeft: {
-          imgSrc: "/mario-clone/images/sprites/mario-running-left.png",
+          imgSrc: "./images/sprites/mario-running-left.png",
           frameRate: 2,
           frameBuffer: 8,
         },
         jump: {
-          imgSrc: "/mario-clone/images/sprites/mario-jumping-right.png",
+          imgSrc: "./images/sprites/mario-jumping-right.png",
           frameRate: 1,
           frameBuffer: 8,
         },
         jumpLeft: {
-          imgSrc: "/mario-clone/images/sprites/mario-jumping-left.png",
+          imgSrc: "./images/sprites/mario-jumping-left.png",
           frameRate: 1,
           frameBuffer: 8,
         },

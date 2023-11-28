@@ -18,37 +18,39 @@ let deathSoundBuffer;
 let levelClearBuffer;
 let overworldBuffer;
 
-loadSoundEffect("https://weabreus.github.io/mario-clone/audio/sfx/Mario Jump.wav").then(buffer => {
+
+loadSoundEffect("./audio/sfx/Mario Jump.wav").then((buffer) => {
   jumpSoundBuffer = buffer;
 });
 
-loadSoundEffect("https://weabreus.github.io/mario-clone/audio/sfx/smb3_bump.wav").then(buffer => {
+loadSoundEffect("./audio/sfx/smb3_bump.wav").then((buffer) => {
   bumpSoundBuffer = buffer;
 });
 
-loadSoundEffect("https://weabreus.github.io/mario-clone/audio/sfx/Coin.wav").then(buffer => {
+loadSoundEffect("./audio/sfx/Coin.wav").then((buffer) => {
   coinSoundBuffer = buffer;
-})
+});
 
-loadSoundEffect("https://weabreus.github.io/mario-clone/audio/sfx/smb3_1-up.wav").then(buffer => {
+
+loadSoundEffect("./audio/sfx/smb3_1-up.wav").then((buffer) => {
   oneUpSoundBuffer = buffer;
-})
+});
 
-loadSoundEffect("https://weabreus.github.io/mario-clone/audio/sfx/Death.wav").then(buffer => {
+loadSoundEffect("./audio/sfx/Death.wav").then((buffer) => {
   deathSoundBuffer = buffer;
-})
+});
 
-loadSoundEffect("https://weabreus.github.io/mario-clone/audio/sfx/smb3_level_clear.wav").then(buffer => {
+loadSoundEffect("./audio/sfx/smb3_level_clear.wav").then((buffer) => {
   levelClearBuffer = buffer;
-})
+});
 
-loadSoundEffect("https://weabreus.github.io/mario-clone/audio/sfx/overworld.mp3").then(buffer => {
+loadSoundEffect("./audio/sfx/overworld.mp3").then((buffer) => {
   overworldBuffer = buffer;
-})
+});
 
 window.onload = function () {
   backgroundMusic = document.getElementById("background-music");
-  
+
   let startButton = document.getElementById("start-button");
   let continueButton = document.getElementById("continue-button");
   let endButton = document.getElementById("end-button");
@@ -66,7 +68,8 @@ window.onload = function () {
       floorCollisions2D,
       platformCollisions2D,
       questionBoxesCollisions2D,
-      endGameCollisions2D
+      endGameCollisions2D,
+      brickCollisions2D
     );
     game.start();
     playMusic();
@@ -87,17 +90,27 @@ window.onload = function () {
       case "d":
         game.player.keys.d.pressed = true;
         game.player.direction = "right";
+        // if (game.player.velocity.x > 0) {
+        //   game.foreground.offSet = -0.5;
+        // }
+
         // game.player.velocity.x = 1;
         break;
       case "a":
         game.player.keys.a.pressed = true;
         game.player.direction = "left";
         game.player.velocity.x = -1;
+        // if (game.player.velocity < 0) {
+        //   game.foreground.offSet = 0.5;
+        // }
         break;
       case "w":
-        game.player.velocity.y = -18 / 2;
-        playSoundEffectBuffer(jumpSoundBuffer);
-        break;
+        if (game.player.jumps > 0) {
+          game.player.jumps -= 1;
+          game.player.velocity.y = -18 / 2;
+          playSoundEffectBuffer(jumpSoundBuffer);
+          break;
+        }
     }
   });
 
@@ -105,12 +118,11 @@ window.onload = function () {
     switch (event.key) {
       case "d":
         game.player.keys.d.pressed = false;
-
+       
         // game.player.velocity.x = 1;
         break;
       case "a":
         game.player.keys.a.pressed = false;
-
         // game.player.velocity.x = -1;
         break;
     }
@@ -134,10 +146,10 @@ window.onload = function () {
 
     endButton.addEventListener("click", () => {
       location.reload();
-    })
+    });
 
     continueButtonEnd.addEventListener("click", () => {
       location.reload();
-    })
+    });
   });
 };

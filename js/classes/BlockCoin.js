@@ -4,7 +4,7 @@ class BlockCoin extends Sprite {
       canvas,
       canvasContext,
       position,
-      imgSrc: "/mario-clone/images/sprites/box-coin-sprite-sheet.png",
+      imgSrc: "./images/sprites/box-coin-sprite-sheet.png",
       frameRate: 4,
       scale: 1,
     });
