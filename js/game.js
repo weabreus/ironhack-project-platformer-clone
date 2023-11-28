@@ -37,7 +37,7 @@ class Game {
         x: 0,
         y: 0,
       },
-      imgSrc: "../images/level1-main-background.png",
+      imgSrc: "./images/level1-main-background.png",
     });
     this.scaledCanvas = {
       width: this.canvas.width / 2,
