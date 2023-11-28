@@ -1,33 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/styles.css" />
     <title>Super Mario Bros. 3 - Clone</title>
-</head>
-<body>
+  </head>
+  <body>
     <main>
-        <div id="game-intro">
-            <div id="game-intro-content">
-                <div id="game-logo">
-                    <h1>Super</h1>
-                    <h1>Mario Bros.</h1>
-                    <h1 class="game-logo-number">3</h1>
-                </div>
-                <div id="game-intro-start-controls">
-                    <button id="start-button" class="mariofont">start game</button>
-                </div>
-                
+      <div id="game-intro">
+        <div id="game-intro-content">
+          <div id="game-logo">
+            <h1>Super</h1>
+            <h1>Mario Bros.</h1>
+            <h1 class="game-logo-number">3</h1>
+          </div>
+          <div id="game-intro-start-controls">
+            <button id="start-button" class="mariofont">start game</button>
+          </div>
+        </div>
+      </div>
+      <div id="game-container">
+        <div id="score" class="mariofont">points: 0</div>
+        <canvas></canvas>
+        <div id="game-lost">
+          <div class="message-window mariofont">
+            <p>mario</p>
+            <p>game over!</p>
+            <div id="game-lost-options">
+              <img src="./images/sprites/mario-dead.png" />
+              <div id="game-lost-options-buttons" class="mariofont">
+                <button id="continue-button" class="mariofont">
+                  <span
+                    ><img
+                      src="./images/sprites/menu-pointer.png"
+                      alt=""
+                      width="12"
+                      height="12"
+                  /></span>
+                  continue
+                </button>
+                <button id="end-button" class="mariofont">
+                  <span
+                    ><img
+                      src="./images/sprites/menu-pointer.png"
+                      alt=""
+                      width="12"
+                      height="12"
+                  /></span>
+                  end
+                </button>
+              </div>
             </div>
+          </div>
         </div>
-        <div id="game-container">
-            <div id="score" class="mariofont">points: 0</div>
-            <canvas></canvas>
-        </div>
-        <div id="game-end">
+      </div>
 
-        </div>
+      <div id="game-end"></div>
     </main>
     <script type="text/javascript" src="./js/utils.js"></script>
     <script type="text/javascript" src="./js/data/collisions.js"></script>
@@ -37,9 +66,12 @@
     <script type="text/javascript" src="./js/classes/PlusMushroom.js"></script>
     <script type="text/javascript" src="./js/classes/BlockCoin.js"></script>
     <script type="text/javascript" src="./js/classes/QuestionBlock.js"></script>
-    <script type="text/javascript" src="./js/classes/CollisionBlock.js"></script>
+    <script
+      type="text/javascript"
+      src="./js/classes/CollisionBlock.js"
+    ></script>
     <script type="text/javascript" src="./js/player.js"></script>
     <script type="text/javascript" src="./js/game.js"></script>
     <script type="text/javascript" src="./js/index.js"></script>
-</body>
+  </body>
 </html>

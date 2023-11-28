@@ -67,7 +67,7 @@ body {
   align-items: center;
 }
 #game-intro-start-controls {
-    height: 18px;
+  height: 18px;
 }
 .mariofont {
   color: white;
@@ -79,8 +79,27 @@ body {
     0px -2px 0 #000;
 }
 
-#game-intro-start-controls button:hover {
-    font-size: 18px;
+button {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  line-height: 1.2em;
+  margin-left: 22px;
+}
+
+button > span {
+  display: none;
+}
+
+button:hover {
+  font-size: 18px;
+  margin-left: 0px;
+}
+
+button:hover > span {
+  display: block;
 }
 
 #game-container {
@@ -104,18 +123,90 @@ input[type="reset"] {
 }
 
 #game-container {
-    background-color: black;
-    width: 100vw;
-    height: 100vh;
+  background-color: black;
+  width: 100vw;
+  height: 100vh;
 }
 
 #game-container canvas {
-    
+ 
 }
 
 #score {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   padding: 32px;
+}
+
+#game-lost {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+#game-lost-options {
+  display: flex;
+  flex: 1 1 0%;
+  justify-content: space-around;
+  align-items: center;
+  
+}
+
+#game-lost-options > img {
+  width: 48px;
+  height: 48px;
+  
+}
+
+#game-lost-options-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 116px;
+  line-height: 1.5rem;
+}
+
+
+
+
+.message-window {
+  display: flex;
+  flex-direction: column;
+  /* Set your element's dimensions */
+  width: 300px;
+  height: 100px;
+  padding: 10px;
+  margin: 0px;
+
+  /* Set the white border */
+  border: 5px solid white;
+  border-radius: 2px;
+
+  /* Add the outer black outline using box-shadow */
+  /* The inner black border is also created using box-shadow */
+  box-shadow: 
+  -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+  1px 1px 0 #000, 0px -1px 0 #000, 0px 1px 0 #000, -1px 0px 0 #000,
+  1px 0px 0 #000, 1px 2px 0 #000, -1px 2px 0 #000, 2px -1px 0 #000,
+  2px 1px 0 #000, 2px 0px 0 #000, 0px 2px 0 #000, -2px 0px 0 #000,
+  0px -2px 0 #000, /* Outer black border */
+      inset 0 0 0 2px black; /* Inner black border */
+
+  /* Other styles for your element (optional) */
+  background-color: #90e7ed;
+}
+
+.message-window > p {
+  margin: 0px;
 }
