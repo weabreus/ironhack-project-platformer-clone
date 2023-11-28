@@ -16,12 +16,13 @@
                     <h1 class="game-logo-number">3</h1>
                 </div>
                 <div id="game-intro-start-controls">
-                    <button id="start-button">start game</button>
+                    <button id="start-button" class="mariofont">start game</button>
                 </div>
                 
             </div>
         </div>
         <div id="game-container">
+            <div id="score" class="mariofont">points: 0</div>
             <canvas></canvas>
         </div>
         <div id="game-end">
@@ -30,8 +31,13 @@
     </main>
     <script type="text/javascript" src="./js/utils.js"></script>
     <script type="text/javascript" src="./js/data/collisions.js"></script>
-    <script type="text/javascript" src="./js/classes/CollisionBlock.js"></script>
     <script type="text/javascript" src="./js/sprite.js"></script>
+    <script type="text/javascript" src="./js/classes/Item.js"></script>
+    <script type="text/javascript" src="./js/classes/SuperMushroom.js"></script>
+    <script type="text/javascript" src="./js/classes/PlusMushroom.js"></script>
+    <script type="text/javascript" src="./js/classes/BlockCoin.js"></script>
+    <script type="text/javascript" src="./js/classes/QuestionBlock.js"></script>
+    <script type="text/javascript" src="./js/classes/CollisionBlock.js"></script>
     <script type="text/javascript" src="./js/player.js"></script>
     <script type="text/javascript" src="./js/game.js"></script>
     <script type="text/javascript" src="./js/index.js"></script>

@@ -5,8 +5,6 @@ class Player extends Sprite {
     canvas,
     canvasContext,
     position,
-    collisionBlocks,
-    platformCollisionsBlocks,
     imgSrc,
     frameRate,
     animations,
@@ -18,8 +16,6 @@ class Player extends Sprite {
     this.canvas = canvas;
     this.canvasContext = canvasContext;
     this.position = position;
-    this.collisionBlocks = collisionBlocks;
-    this.platformCollisionBlocks = platformCollisionsBlocks;
     this.hitbox = {
       position: {
         x: this.position.x,
@@ -143,9 +139,12 @@ class Player extends Sprite {
 
   shouldPanCameraToTheLeft() {
     const cameraboxRightSide = this.camerabox.position.x + this.camerabox.width;
-    
-    if(cameraboxRightSide >= this.background.width - 10) return
-    if (cameraboxRightSide >= this.canvas.width / 2 + Math.abs(this.camera.position.x)) {
+
+    if (cameraboxRightSide >= this.background.width - 10) return;
+    if (
+      cameraboxRightSide >=
+      this.canvas.width / 2 + Math.abs(this.camera.position.x)
+    ) {
       this.camera.position.x -= this.velocity.x;
     }
   }
@@ -158,8 +157,36 @@ class Player extends Sprite {
   }
 
   checkForHorizontalCollisions() {
-    for (let i = 0; i < this.collisionBlocks.length; i++) {
-      const collisionBlock = this.collisionBlocks[i];
+    for (let i = 0; i < collisionBlocks.length; i++) {
+      const collisionBlock = collisionBlocks[i];
+
+      if (
+        collision({
+          object: this.hitbox,
+          collisionBlock,
+        })
+      ) {
+        if (this.velocity.x > 0) {
+          this.velocity.x = 0;
+          const offset =
+            this.hitbox.position.x - this.position.x + this.hitbox.width;
+          this.position.x = collisionBlock.position.x - offset - 0.01;
+          break;
+        }
+
+        if (this.velocity.x < 0) {
+          this.velocity.x = 0;
+          const offset = this.hitbox.position.x - this.position.x;
+          this.position.x =
+            collisionBlock.position.x + collisionBlock.width - offset + 0.01;
+          break;
+        }
+      }
+    }
+
+    // check for collisions with question boxes
+    for (let i = 0; i < questionBoxesCollisionsBlocks.length; i++) {
+      const collisionBlock = questionBoxesCollisionsBlocks[i];
 
       if (
         collision({
@@ -187,8 +214,12 @@ class Player extends Sprite {
   }
 
   checkForHorizontalCanvasCollision() {
-    if (this.hitbox.position.x + this.hitbox.width + this.velocity.x >= this.background.width - 10 || this.hitbox.position.x + this.velocity.x<= 0) {
-      this.velocity.x = 0
+    if (
+      this.hitbox.position.x + this.hitbox.width + this.velocity.x >=
+        this.background.width - 10 ||
+      this.hitbox.position.x + this.velocity.x <= 0
+    ) {
+      this.velocity.x = 0;
     }
   }
 
@@ -198,8 +229,35 @@ class Player extends Sprite {
   }
 
   checkForVerticalCollisions() {
-    for (let i = 0; i < this.collisionBlocks.length; i++) {
-      const collisionBlock = this.collisionBlocks[i];
+    for (let i = 0; i < collisionBlocks.length; i++) {
+      const collisionBlock = collisionBlocks[i];
+
+      if (
+        collision({
+          object: this.hitbox,
+          collisionBlock,
+        })
+      ) {
+        if (this.velocity.y > 0) {
+          this.velocity.y = 0;
+          const offset =
+            this.hitbox.position.y - this.position.y + this.hitbox.height;
+          this.position.y = collisionBlock.position.y - offset - 0.01;
+          break;
+        }
+
+        if (this.velocity.y < 0) {
+          this.velocity.y = 0;
+          const offset = this.hitbox.position.y - this.position.y;
+          this.position.y =
+            collisionBlock.position.y + collisionBlock.height - offset + 0.01;
+          break;
+        }
+      }
+    }
+    // check for question boxes collisions
+    for (let i = 0; i < questionBoxesCollisionsBlocks.length; i++) {
+      const collisionBlock = questionBoxesCollisionsBlocks[i];
 
       if (
         collision({
@@ -227,8 +285,8 @@ class Player extends Sprite {
 
     // Detects collision for platforms
 
-    for (let i = 0; i < this.platformCollisionBlocks.length; i++) {
-      const platformCollisionBlock = this.platformCollisionBlocks[i];
+    for (let i = 0; i < platformCollisionsBlocks.length; i++) {
+      const platformCollisionBlock = platformCollisionsBlocks[i];
 
       if (
         platformCollision({
@@ -243,6 +301,21 @@ class Player extends Sprite {
           this.position.y = platformCollisionBlock.position.y - offset - 0.01;
           break;
         }
+      }
+    }
+
+    // Detects collision with items
+    for (let i = 0; i < stageItems.length; i++) {
+      const collisionBlock = stageItems[i];
+
+      if (
+        collision({
+          object: this.hitbox,
+          collisionBlock,
+        })
+      ) {
+        updateGameScore(stageItems[i].value);
+        stageItems.splice(i, 1);
       }
     }
   }
